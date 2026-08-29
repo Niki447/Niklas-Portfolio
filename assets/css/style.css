@@ -317,6 +317,12 @@ nav.main-nav a[aria-current="page"] {
   color: var(--text-dim);
 }
 
+.marquee-set {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
 .marquee-track span.sep {
   color: var(--accent);
 }
@@ -327,8 +333,31 @@ nav.main-nav a[aria-current="page"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
-  .brand .blink, .hero-typed .typed-caret { animation: none; }
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    row-gap: 0.5rem;
+  }
+  .marquee-track .marquee-set[aria-hidden="true"] {
+    display: none;
+  }
+  .marquee-set {
+    flex-wrap: wrap;
+  }
+  .marquee {
+    overflow: visible;
+    white-space: normal;
+  }
+  .brand .blink,
+  .hero-typed .typed-caret {
+    animation: none;
+    opacity: 1;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Sections */
