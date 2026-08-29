@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jarvis — Niklas</title>
-  <meta name="description" content="Jarvis — KI-Assistent/Projekt von Niklas." />
+  <meta name="description" content="Jarvis — ein selbst entwickelter, lokal laufender KI-Assistent von Niklas." />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
@@ -31,7 +31,7 @@
       <div class="container">
         <p class="kicker">Projekt</p>
         <h1>Jarvis</h1>
-        <p>[Platzhalter] Kurze Beschreibung, was Jarvis ist/kann (z. B. KI-Assistent, Sprachsteuerung, Automatisierung) — schick mir die Details, dann füll ich das hier aus.</p>
+        <p>Ein selbst entwickelter, lokal laufender KI-Assistent — komplett auf eigener Hardware, ohne Cloud-Abhängigkeit und ohne laufende Kosten pro Anfrage. Seit Juli 2026 in aktiver Entwicklung, mittlerweile über 1.200 Commits in strukturierten Feature-Branches.</p>
       </div>
     </section>
 
@@ -44,24 +44,43 @@
         <div class="grid">
 
           <div class="card" data-reveal>
-            <span class="tag">01</span>
-            <h3>[Feature 1]</h3>
-            <p class="placeholder">[Platzhalter] z. B. Sprachsteuerung, Automatisierung, Integration in ...</p>
+            <span class="tag">Council</span>
+            <h3>Multi-Agent-Verifikation</h3>
+            <p>Ein Generator-Kritiker-Richter-Loop aus mehreren lokalen Modellen prüft Antworten gegenseitig, bevor sie ausgegeben werden — mehr Verlässlichkeit durch Verifikation statt reiner Rohleistung.</p>
           </div>
 
           <div class="card" data-reveal>
-            <span class="tag">02</span>
-            <h3>[Feature 2]</h3>
-            <p class="placeholder">[Platzhalter] Kurze Beschreibung folgt.</p>
+            <span class="tag">Memory</span>
+            <h3>Langzeitgedächtnis</h3>
+            <p>Millionen eingebettete Einträge in einer Vektordatenbank, dazu ein kleiner, handkuratierter Kern an Kerninformationen — echtes Projekt- und Kontextgedächtnis statt Session-Amnesie.</p>
           </div>
 
           <div class="card" data-reveal>
-            <span class="tag">03</span>
-            <h3>[Feature 3]</h3>
-            <p class="placeholder">[Platzhalter] Kurze Beschreibung folgt.</p>
+            <span class="tag">Aegis</span>
+            <h3>Selbstkorrektur</h3>
+            <p>Erkennt eigene Fehler (per Owner-Veto oder KPI-Abgleich) und schlägt kontrollierte, stufenweise freigegebene Korrekturen vor — nie eine unbeaufsichtigte automatische Änderung.</p>
+          </div>
+
+          <div class="card" data-reveal>
+            <span class="tag">UI</span>
+            <h3>Eigene Desktop-Oberfläche</h3>
+            <p>Echtzeit-Overlay ("Signal Chamber") mit Glassmorphism-Design, Live-Wissensgraph und vollständigem Hell-/Dunkel-Theming — komplett selbst entwickelt.</p>
           </div>
 
         </div>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <p class="kicker">Tech-Stack</p>
+          <h2>Womit Jarvis gebaut ist</h2>
+        </div>
+        <p style="color:var(--text-dim);max-width:640px;" data-reveal>
+          Python (FastAPI), Ollama für lokales Modell-Serving, Qdrant &amp; ChromaDB für Vektorspeicher,
+          Neo4j als Wissensgraph, Redis als Event-Bus, eigenes Desktop-Overlay (HTML/CSS/JS via pywebview).
+        </p>
       </div>
     </section>
 
