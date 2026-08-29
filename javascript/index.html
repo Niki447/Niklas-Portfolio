@@ -5,20 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JavaScript-Projekte — Niklas</title>
   <meta name="description" content="JavaScript-Projekte, Tools und Web-Apps von Niklas." />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
 <body>
 
   <header class="site-header">
     <div class="nav-inner">
-      <a class="brand" href="../index.html">Niklas<span>.</span></a>
+      <a class="brand" href="../index.html">niki4407<span class="blink">_</span></a>
       <nav class="main-nav">
         <ul>
-          <li><a href="../index.html">Start</a></li>
-          <li><a href="index.html" aria-current="page">JavaScript</a></li>
-          <li><a href="../freelance/index.html">Freelance</a></li>
-          <li><a href="../fivem/index.html">FiveM</a></li>
-          <li><a href="../discord/index.html">Discord</a></li>
+          <li><a href="../index.html">start</a></li>
+          <li><a href="index.html" aria-current="page">javascript</a></li>
+          <li><a href="../freelance/index.html">freelance</a></li>
+          <li><a href="../fivem/index.html">fivem</a></li>
+          <li><a href="../discord/index.html">discord</a></li>
           <li><a href="../index.html#kontakt" class="nav-cta">Kontakt</a></li>
         </ul>
       </nav>
@@ -28,7 +29,7 @@
   <main>
     <section class="page-hero">
       <div class="container">
-        <p class="eyebrow">🟨 JavaScript</p>
+        <p class="kicker">// javascript/</p>
         <h1>JavaScript-Projekte</h1>
         <p>[Platzhalter] Eigene Web-Apps, Tools und Experimente — von kleinen Spielereien bis zu vollständigen Anwendungen.</p>
       </div>
@@ -38,17 +39,20 @@
       <div class="container">
         <div class="grid">
 
-          <div class="card">
+          <div class="card" data-reveal>
+            <span class="tag">01</span>
             <h3>[Projektname 1]</h3>
             <p class="placeholder">[Platzhalter] Kurze Beschreibung, Technologien, Link zur Demo/GitHub folgt.</p>
           </div>
 
-          <div class="card">
+          <div class="card" data-reveal>
+            <span class="tag">02</span>
             <h3>[Projektname 2]</h3>
             <p class="placeholder">[Platzhalter] Kurze Beschreibung, Technologien, Link zur Demo/GitHub folgt.</p>
           </div>
 
-          <div class="card">
+          <div class="card" data-reveal>
+            <span class="tag">03</span>
             <h3>[Projektname 3]</h3>
             <p class="placeholder">[Platzhalter] Kurze Beschreibung, Technologien, Link zur Demo/GitHub folgt.</p>
           </div>
@@ -58,10 +62,10 @@
     </section>
 
     <section class="alt">
-      <div class="container section-heading">
+      <div class="container section-heading center" data-reveal>
         <h2>Eigenes Projekt im Kopf?</h2>
         <p>Schreib mir, worum es geht — ich melde mich zurück.</p>
-        <div class="btn-row" style="margin-top:1.5rem;">
+        <div class="btn-row" style="margin-top:1.5rem;justify-content:center;">
           <a href="../index.html#kontakt" class="btn btn-primary">Kontakt aufnehmen</a>
         </div>
       </div>
@@ -70,17 +74,15 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; <span id="year"></span> Niklas — Alle Rechte vorbehalten.</span>
+      <span>© <span data-year></span> niklas — alle rechte vorbehalten.</span>
       <div class="footer-links">
-        <a href="mailto:niklasscheiper@gmail.com">E-Mail</a>
-        <a href="#">GitHub</a>
-        <a href="#">Discord</a>
+        <a href="mailto:niklasscheiper@gmail.com">mail</a>
+        <a href="#">github</a>
+        <a href="#">discord</a>
       </div>
     </div>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="../assets/js/site.js"></script>
 </body>
 </html>

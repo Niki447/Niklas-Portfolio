@@ -5,20 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Niklas — Portfolio</title>
   <meta name="description" content="Portfolio von Niklas: JavaScript-Projekte, Freelance-Arbeiten, FiveM-Modding und Discord-Bots." />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
   <header class="site-header">
     <div class="nav-inner">
-      <a class="brand" href="index.html">Niklas<span>.</span></a>
+      <a class="brand" href="index.html">niki4407<span class="blink">_</span></a>
       <nav class="main-nav">
         <ul>
-          <li><a href="index.html" aria-current="page">Start</a></li>
-          <li><a href="javascript/index.html">JavaScript</a></li>
-          <li><a href="freelance/index.html">Freelance</a></li>
-          <li><a href="fivem/index.html">FiveM</a></li>
-          <li><a href="discord/index.html">Discord</a></li>
+          <li><a href="index.html" aria-current="page">start</a></li>
+          <li><a href="javascript/index.html">javascript</a></li>
+          <li><a href="freelance/index.html">freelance</a></li>
+          <li><a href="fivem/index.html">fivem</a></li>
+          <li><a href="discord/index.html">discord</a></li>
           <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
         </ul>
       </nav>
@@ -29,8 +30,12 @@
     <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <p class="eyebrow">Portfolio</p>
-        <h1>Hi, ich bin Niklas 👋</h1>
+        <p class="kicker">// portfolio.init()</p>
+        <h1>Hi, ich bin <span class="accent-text">Niklas</span> 👋</h1>
+        <p class="hero-typed">
+          <span class="font-mono">$ whoami →</span>
+          <span class="typed-cursor" data-typed='["Web Developer","FiveM Scripter","Discord Bot Builder","Freelancer"]'></span><span class="typed-caret">|</span>
+        </p>
         <!-- TODO: kurzer, prägnanter Claim ersetzen sobald der Text da ist -->
         <p class="lead">
           [Platzhalter] Ich baue Webseiten, Bots, KI-Lösungen und FiveM-Projekte.
@@ -43,14 +48,32 @@
       </div>
     </section>
 
+    <!-- SKILL MARQUEE -->
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>JavaScript</span><span class="sep">//</span>
+        <span>Node.js</span><span class="sep">//</span>
+        <span>FiveM · Lua</span><span class="sep">//</span>
+        <span>Discord.js</span><span class="sep">//</span>
+        <span>KI-Integration</span><span class="sep">//</span>
+        <span>UI/UX</span><span class="sep">//</span>
+        <span>JavaScript</span><span class="sep">//</span>
+        <span>Node.js</span><span class="sep">//</span>
+        <span>FiveM · Lua</span><span class="sep">//</span>
+        <span>Discord.js</span><span class="sep">//</span>
+        <span>KI-Integration</span><span class="sep">//</span>
+        <span>UI/UX</span><span class="sep">//</span>
+      </div>
+    </div>
+
     <!-- ÜBER MICH -->
     <section class="alt" id="ueber-mich">
       <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Über mich</p>
+        <div class="section-heading" data-reveal>
+          <p class="kicker">// 01 — über mich</p>
           <h2>Wer steckt dahinter?</h2>
         </div>
-        <div class="placeholder" style="max-width:700px;margin:0 auto;">
+        <div class="placeholder" style="max-width:700px;" data-reveal>
           [Platzhalter für deinen Über-mich-Text: Wer du bist, was dich antreibt,
           welche Skills/Technologien du nutzt, seit wann du programmierst, etc.
           Schick mir den Text und ich baue ihn hier sauber ein.]
@@ -61,40 +84,39 @@
     <!-- BEREICHE / UNTERSEITEN -->
     <section id="bereiche">
       <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Bereiche</p>
+        <div class="section-heading" data-reveal>
+          <p class="kicker">// 02 — bereiche</p>
           <h2>Womit ich mich beschäftige</h2>
           <p>Jeder Bereich hat seine eigene Seite mit Projekten, Demos und Beispielen.</p>
         </div>
         <div class="grid">
 
-          <div class="card">
-            <span class="icon">🟨</span>
+          <div class="card" data-reveal>
+            <span class="tag">JS</span>
             <h3>JavaScript-Projekte</h3>
             <p>[Platzhalter] Eigene Web-Apps, Tools und Experimente mit JavaScript.</p>
-            <a class="card-link" href="javascript/index.html">Projekte ansehen →</a>
+            <a class="card-link" href="javascript/index.html">./projekte ansehen →</a>
           </div>
 
-          <div class="card">
-            <span class="icon">💼</span>
+          <div class="card" data-reveal>
+            <span class="tag">WORK</span>
             <h3>Freelance &amp; Selbstständigkeit</h3>
             <p>[Platzhalter] Demoseiten, Bots, KI-Lösungen und Webseiten für Kunden.</p>
-            <a class="card-link" href="freelance/index.html">Angebot ansehen →</a>
+            <a class="card-link" href="freelance/index.html">./angebot ansehen →</a>
           </div>
 
-          <div class="card">
-            <span class="icon">🎮</span>
+          <div class="card" data-reveal>
+            <span class="tag">GTA</span>
             <h3>FiveM &amp; Modding</h3>
             <p>[Platzhalter] Skripte, UIs, Server-Setups und Vorlagen für FiveM.</p>
-            <a class="card-link" href="fivem/index.html">Mehr ansehen →</a>
+            <a class="card-link" href="fivem/index.html">./mehr ansehen →</a>
           </div>
 
-          <div class="card">
-            <span class="icon">🤖</span>
+          <div class="card" data-reveal>
+            <span class="tag soon">SOON</span>
             <h3>Discord-Bots</h3>
-            <span class="badge soon">In Planung</span>
             <p>[Platzhalter] Individuelle Discord-Bots für Server, Communities und Kunden.</p>
-            <a class="card-link" href="discord/index.html">Mehr ansehen →</a>
+            <a class="card-link" href="discord/index.html">./mehr ansehen →</a>
           </div>
 
         </div>
@@ -104,13 +126,13 @@
     <!-- KONTAKT -->
     <section class="alt" id="kontakt">
       <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Kontakt</p>
+        <div class="section-heading" data-reveal>
+          <p class="kicker">// 03 — kontakt</p>
           <h2>Lass uns reden</h2>
           <p>Ob Projekt-Anfrage, Frage oder einfach Hallo sagen — schreib mir kurz.</p>
         </div>
 
-        <form class="contact-form" action="mailto:niklasscheiper@gmail.com" method="post" enctype="text/plain">
+        <form class="contact-form" action="mailto:niklasscheiper@gmail.com" method="post" enctype="text/plain" data-reveal>
           <div>
             <label for="name">Name</label>
             <input type="text" id="name" name="Name" required />
@@ -125,7 +147,7 @@
           </div>
           <button type="submit" class="btn btn-primary">Nachricht senden</button>
           <p class="form-note">
-            Öffnet dein E-Mail-Programm mit vorausgefüllter Nachricht.
+            $ öffnet dein E-Mail-Programm mit vorausgefüllter Nachricht
             <!-- TODO: später optional auf Formspree o.ä. umstellen für Versand direkt auf der Seite -->
           </p>
         </form>
@@ -135,18 +157,16 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; <span id="year"></span> Niklas — Alle Rechte vorbehalten.</span>
+      <span>© <span data-year></span> niklas — alle rechte vorbehalten.</span>
       <div class="footer-links">
         <!-- TODO: echte Links einsetzen -->
-        <a href="mailto:niklasscheiper@gmail.com">E-Mail</a>
-        <a href="#">GitHub</a>
-        <a href="#">Discord</a>
+        <a href="mailto:niklasscheiper@gmail.com">mail</a>
+        <a href="#">github</a>
+        <a href="#">discord</a>
       </div>
     </div>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="assets/js/site.js"></script>
 </body>
 </html>
