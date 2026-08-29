@@ -5,20 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FiveM &amp; Modding — Niklas</title>
   <meta name="description" content="FiveM-Skripte, UIs, Server-Setups und Vorlagen von Niklas." />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
 <body>
 
   <header class="site-header">
     <div class="nav-inner">
-      <a class="brand" href="../index.html">Niklas<span>.</span></a>
+      <a class="brand" href="../index.html">niki4407<span class="blink">_</span></a>
       <nav class="main-nav">
         <ul>
-          <li><a href="../index.html">Start</a></li>
-          <li><a href="../javascript/index.html">JavaScript</a></li>
-          <li><a href="../freelance/index.html">Freelance</a></li>
-          <li><a href="index.html" aria-current="page">FiveM</a></li>
-          <li><a href="../discord/index.html">Discord</a></li>
+          <li><a href="../index.html">start</a></li>
+          <li><a href="../javascript/index.html">javascript</a></li>
+          <li><a href="../freelance/index.html">freelance</a></li>
+          <li><a href="index.html" aria-current="page">fivem</a></li>
+          <li><a href="../discord/index.html">discord</a></li>
           <li><a href="../index.html#kontakt" class="nav-cta">Kontakt</a></li>
         </ul>
       </nav>
@@ -28,7 +29,7 @@
   <main>
     <section class="page-hero">
       <div class="container">
-        <p class="eyebrow">🎮 FiveM</p>
+        <p class="kicker">// fivem/</p>
         <h1>FiveM &amp; Modding</h1>
         <p>[Platzhalter] Skripte, UIs, Server-Setups und Vorlagen für FiveM-Server.</p>
       </div>
@@ -36,32 +37,32 @@
 
     <section>
       <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Leistungen</p>
+        <div class="section-heading" data-reveal>
+          <p class="kicker">// leistungen</p>
           <h2>Was ich anbiete</h2>
         </div>
         <div class="grid">
 
-          <div class="card">
-            <span class="icon">🧩</span>
+          <div class="card" data-reveal>
+            <span class="tag">LUA</span>
             <h3>Skripte</h3>
             <p class="placeholder">[Platzhalter] z. B. Gameplay-Skripte, Jobs, Systeme.</p>
           </div>
 
-          <div class="card">
-            <span class="icon">🎨</span>
+          <div class="card" data-reveal>
+            <span class="tag">UI</span>
             <h3>UIs</h3>
             <p class="placeholder">[Platzhalter] z. B. HUDs, Menüs, individuelle Interfaces.</p>
           </div>
 
-          <div class="card">
-            <span class="icon">🖥️</span>
+          <div class="card" data-reveal>
+            <span class="tag">SRV</span>
             <h3>Server-Setups</h3>
             <p class="placeholder">[Platzhalter] z. B. komplette Server-Einrichtung, Konfiguration.</p>
           </div>
 
-          <div class="card">
-            <span class="icon">📦</span>
+          <div class="card" data-reveal>
+            <span class="tag">TPL</span>
             <h3>Vorlagen</h3>
             <p class="placeholder">[Platzhalter] z. B. fertige Templates zum Anpassen.</p>
           </div>
@@ -72,18 +73,20 @@
 
     <section class="alt">
       <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">Projekte</p>
+        <div class="section-heading" data-reveal>
+          <p class="kicker">// projekte</p>
           <h2>Beispiel-Arbeiten</h2>
         </div>
         <div class="grid">
 
-          <div class="card">
+          <div class="card" data-reveal>
+            <span class="tag">01</span>
             <h3>[FiveM-Projekt 1]</h3>
             <p class="placeholder">[Platzhalter] Beschreibung + Screenshot/Video folgt.</p>
           </div>
 
-          <div class="card">
+          <div class="card" data-reveal>
+            <span class="tag">02</span>
             <h3>[FiveM-Projekt 2]</h3>
             <p class="placeholder">[Platzhalter] Beschreibung + Screenshot/Video folgt.</p>
           </div>
@@ -93,10 +96,10 @@
     </section>
 
     <section>
-      <div class="container section-heading">
+      <div class="container section-heading center" data-reveal>
         <h2>Idee für deinen Server?</h2>
         <p>Schreib mir, was du brauchst — Skript, UI oder komplettes Setup.</p>
-        <div class="btn-row" style="margin-top:1.5rem;">
+        <div class="btn-row" style="margin-top:1.5rem;justify-content:center;">
           <a href="../index.html#kontakt" class="btn btn-primary">Kontakt aufnehmen</a>
         </div>
       </div>
@@ -105,17 +108,15 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; <span id="year"></span> Niklas — Alle Rechte vorbehalten.</span>
+      <span>© <span data-year></span> niklas — alle rechte vorbehalten.</span>
       <div class="footer-links">
-        <a href="mailto:niklasscheiper@gmail.com">E-Mail</a>
-        <a href="#">GitHub</a>
-        <a href="#">Discord</a>
+        <a href="mailto:niklasscheiper@gmail.com">mail</a>
+        <a href="#">github</a>
+        <a href="#">discord</a>
       </div>
     </div>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="../assets/js/site.js"></script>
 </body>
 </html>
