@@ -306,7 +306,6 @@ nav.main-nav a[aria-current="page"] {
 
 .marquee-track {
   display: inline-flex;
-  gap: 2.5rem;
   padding: 0.9rem 0;
   width: max-content;
   animation: marquee 26s linear infinite;
@@ -321,6 +320,7 @@ nav.main-nav a[aria-current="page"] {
   display: inline-flex;
   align-items: center;
   gap: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .marquee-track span.sep {
