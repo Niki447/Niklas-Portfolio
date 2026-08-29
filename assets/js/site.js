@@ -96,4 +96,20 @@
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();
   });
+
+  // Mobile nav toggle
+  document.querySelectorAll(".nav-toggle").forEach(function (btn) {
+    var nav = btn.parentElement.querySelector(".main-nav");
+    if (!nav) return;
+    btn.addEventListener("click", function () {
+      var isOpen = nav.classList.toggle("open");
+      btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+    nav.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        nav.classList.remove("open");
+        btn.setAttribute("aria-expanded", "false");
+      });
+    });
+  });
 })();
