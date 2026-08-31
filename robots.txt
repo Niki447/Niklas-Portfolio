@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /admin.html
+
+Sitemap: https://niki4407.de/sitemap.xml

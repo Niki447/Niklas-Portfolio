@@ -9,10 +9,20 @@
   var sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
   var loginView = document.getElementById("login-view");
+  var mfaEnrollView = document.getElementById("mfa-enroll-view");
+  var mfaChallengeView = document.getElementById("mfa-challenge-view");
   var dashView = document.getElementById("dashboard-view");
   var whoami = document.getElementById("whoami");
 
-  // ---------- Auth ----------
+  function showOnly(view) {
+    [loginView, mfaEnrollView, mfaChallengeView, dashView].forEach(function (v) {
+      v.hidden = v !== view;
+    });
+  }
+
+  // ---------- Auth (Passwort + Pflicht-2FA) ----------
+  var mfaState = { factorId: null, challengeId: null };
+
   document.getElementById("login-form").addEventListener("submit", function (e) {
     e.preventDefault();
     var email = document.getElementById("login-email").value.trim();
@@ -22,7 +32,9 @@
     sb.auth.signInWithPassword({ email: email, password: password }).then(function (res) {
       if (res.error) {
         errEl.textContent = "Login fehlgeschlagen: " + res.error.message;
+        return;
       }
+      routeAfterAuthChange();
     });
   });
 
@@ -30,26 +42,114 @@
     sb.auth.signOut();
   });
 
-  sb.auth.onAuthStateChange(function (event, session) {
-    if (session) {
-      loginView.hidden = true;
-      dashView.hidden = false;
-      whoami.textContent = session.user.email;
-      loadAll();
-      startPresence();
-    } else {
-      loginView.hidden = false;
-      dashView.hidden = true;
+  function routeAfterAuthChange() {
+    sb.auth.getSession().then(function (res) {
+      var session = res.data.session;
+      if (!session) {
+        showOnly(loginView);
+        stopPresence();
+        return;
+      }
+      sb.auth.mfa.getAuthenticatorAssuranceLevel().then(function (aal) {
+        var current = aal.data.currentLevel;
+        var next = aal.data.nextLevel;
+
+        if (next === "aal2" && current !== "aal2") {
+          // Faktor ist eingerichtet, Code für diesen Login noch nötig
+          sb.auth.mfa.listFactors().then(function (fres) {
+            var totp = ((fres.data && fres.data.totp) || [])[0];
+            if (!totp) {
+              enterDashboard(session);
+              return;
+            }
+            sb.auth.mfa.challenge({ factorId: totp.id }).then(function (cres) {
+              if (cres.error) {
+                showOnly(loginView);
+                document.getElementById("login-error").textContent = cres.error.message;
+                return;
+              }
+              mfaState.factorId = totp.id;
+              mfaState.challengeId = cres.data.id;
+              showOnly(mfaChallengeView);
+            });
+          });
+        } else if (current === "aal1" && next === "aal1") {
+          // Noch kein 2FA-Faktor eingerichtet -> Ersteinrichtung erzwingen
+          sb.auth.mfa.enroll({ factorType: "totp" }).then(function (eres) {
+            if (eres.error) {
+              showOnly(loginView);
+              document.getElementById("login-error").textContent = eres.error.message;
+              return;
+            }
+            mfaState.factorId = eres.data.id;
+            document.getElementById("mfa-qr").src = eres.data.totp.qr_code;
+            document.getElementById("mfa-secret").value = eres.data.totp.secret;
+            showOnly(mfaEnrollView);
+          });
+        } else {
+          enterDashboard(session);
+        }
+      });
+    });
+  }
+
+  document.getElementById("mfa-challenge-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var code = document.getElementById("mfa-challenge-code").value.trim();
+    var errEl = document.getElementById("mfa-challenge-error");
+    errEl.textContent = "";
+    sb.auth.mfa
+      .verify({ factorId: mfaState.factorId, challengeId: mfaState.challengeId, code: code })
+      .then(function (res) {
+        if (res.error) {
+          errEl.textContent = "Code falsch oder abgelaufen: " + res.error.message;
+          return;
+        }
+        sb.auth.getSession().then(function (r) {
+          enterDashboard(r.data.session);
+        });
+      });
+  });
+
+  document.getElementById("mfa-enroll-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var code = document.getElementById("mfa-enroll-code").value.trim();
+    var errEl = document.getElementById("mfa-enroll-error");
+    errEl.textContent = "";
+    sb.auth.mfa.challenge({ factorId: mfaState.factorId }).then(function (cres) {
+      if (cres.error) {
+        errEl.textContent = cres.error.message;
+        return;
+      }
+      sb.auth.mfa
+        .verify({ factorId: mfaState.factorId, challengeId: cres.data.id, code: code })
+        .then(function (vres) {
+          if (vres.error) {
+            errEl.textContent = "Code falsch: " + vres.error.message;
+            return;
+          }
+          sb.auth.getSession().then(function (r) {
+            enterDashboard(r.data.session);
+          });
+        });
+    });
+  });
+
+  function enterDashboard(session) {
+    showOnly(dashView);
+    whoami.textContent = session.user.email;
+    loadAll();
+    startPresence();
+  }
+
+  sb.auth.onAuthStateChange(function (event) {
+    if (event === "SIGNED_OUT") {
+      showOnly(loginView);
       stopPresence();
     }
   });
 
-  sb.auth.getSession().then(function (res) {
-    if (!res.data.session) {
-      loginView.hidden = false;
-      dashView.hidden = true;
-    }
-  });
+  routeAfterAuthChange();
 
   // ---------- Tabs ----------
   document.querySelectorAll(".tab-btn").forEach(function (btn) {

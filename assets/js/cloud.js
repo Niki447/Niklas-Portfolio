@@ -78,14 +78,23 @@
       var nameEl = form.querySelector('[name="Name"]');
       var emailEl = form.querySelector('[name="E-Mail"]');
       var msgEl = form.querySelector('[name="Nachricht"]');
+      var hpEl = form.querySelector('[name="website"]');
       if (!nameEl || !emailEl || !msgEl) return; // Feldstruktur unerwartet -> normal absenden
 
       e.preventDefault();
       var note = form.querySelector(".form-note");
       var submitBtn = form.querySelector('button[type="submit"]');
 
+      // Honeypot ausgefüllt -> vermutlich ein Bot: so tun, als hätte es geklappt,
+      // aber nichts speichern (kein Hinweis für Bots, dass sie erkannt wurden).
+      if (hpEl && hpEl.value) {
+        form.reset();
+        if (note) note.textContent = "Danke! Deine Nachricht ist angekommen, ich melde mich zeitnah bei dir.";
+        return;
+      }
+
       sb.from("contact_messages")
-        .insert({ name: nameEl.value, email: emailEl.value, message: msgEl.value })
+        .insert({ name: nameEl.value, email: emailEl.value, message: msgEl.value, website: hpEl ? hpEl.value : "" })
         .then(function (res) {
           if (!res.error) {
             form.reset();

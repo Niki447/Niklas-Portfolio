@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Admin — niki4407</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://elwqgmazudvsgsvgpzxz.supabase.co wss://elwqgmazudvsgsvgpzxz.supabase.co; base-uri 'self'; object-src 'none'; form-action 'self'" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="assets/css/style.css?v=20260831a" />
   <link rel="stylesheet" href="assets/css/admin.css?v=20260831a" />
@@ -27,6 +32,45 @@
         </div>
         <button type="submit" class="btn-small primary" style="width:100%;padding:0.75rem;">Anmelden</button>
         <p class="form-error" id="login-error"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2FA EINRICHTEN (einmalig, beim allerersten Login) -->
+  <div class="login-wrap" id="mfa-enroll-view" hidden>
+    <div class="login-card" style="max-width:420px;">
+      <h1>Zwei-Faktor-Login einrichten</h1>
+      <p class="sub">Scanne den QR-Code mit einer Authenticator-App (z. B. Google Authenticator, Authy, Microsoft Authenticator) und bestätige mit dem angezeigten 6-stelligen Code. Danach ist das für jeden zukünftigen Login nötig.</p>
+      <div style="text-align:center;margin-bottom:1rem;">
+        <img id="mfa-qr" alt="QR-Code für Authenticator-App" style="width:180px;height:180px;background:#fff;border-radius:8px;padding:0.5rem;" />
+      </div>
+      <div class="field">
+        <label>Manueller Code (falls Scannen nicht klappt)</label>
+        <input type="text" id="mfa-secret" readonly style="font-family:var(--font-mono);font-size:0.8rem;" />
+      </div>
+      <form id="mfa-enroll-form">
+        <div class="field">
+          <label for="mfa-enroll-code">6-stelliger Code aus der App</label>
+          <input type="text" id="mfa-enroll-code" inputmode="numeric" pattern="[0-9]*" maxlength="6" required autocomplete="one-time-code" />
+        </div>
+        <button type="submit" class="btn-small primary" style="width:100%;padding:0.75rem;">Bestätigen &amp; aktivieren</button>
+        <p class="form-error" id="mfa-enroll-error"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2FA CODE ABFRAGEN (bei jedem Login) -->
+  <div class="login-wrap" id="mfa-challenge-view" hidden>
+    <div class="login-card">
+      <h1>Zwei-Faktor-Code</h1>
+      <p class="sub">Gib den 6-stelligen Code aus deiner Authenticator-App ein.</p>
+      <form id="mfa-challenge-form">
+        <div class="field">
+          <label for="mfa-challenge-code">Code</label>
+          <input type="text" id="mfa-challenge-code" inputmode="numeric" pattern="[0-9]*" maxlength="6" required autocomplete="one-time-code" />
+        </div>
+        <button type="submit" class="btn-small primary" style="width:100%;padding:0.75rem;">Bestätigen</button>
+        <p class="form-error" id="mfa-challenge-error"></p>
       </form>
     </div>
   </div>
