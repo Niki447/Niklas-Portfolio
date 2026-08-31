@@ -9,10 +9,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png" />
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://elwqgmazudvsgsvgpzxz.supabase.co wss://elwqgmazudvsgsvgpzxz.supabase.co; base-uri 'self'; object-src 'none'; form-action 'self'" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260831a" />
-  <link rel="stylesheet" href="assets/css/admin.css?v=20260831a" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://elwqgmazudvsgsvgpzxz.supabase.co wss://elwqgmazudvsgsvgpzxz.supabase.co; base-uri 'self'; object-src 'none'; form-action 'self'" />
+  <link rel="stylesheet" href="assets/css/fonts.css?v=20260831b" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260831b" />
+  <link rel="stylesheet" href="assets/css/admin.css?v=20260831b" />
 </head>
 <body class="admin-body">
 
@@ -89,6 +89,8 @@
       <button class="tab-btn active" data-tab="visitors">Live-Besucher</button>
       <button class="tab-btn" data-tab="stats">Statistiken</button>
       <button class="tab-btn" data-tab="messages">Nachrichten</button>
+      <button class="tab-btn" data-tab="devlog">Devlog</button>
+      <button class="tab-btn" data-tab="tools">Tools</button>
       <button class="tab-btn" data-tab="settings">Einstellungen</button>
     </div>
 
@@ -116,6 +118,9 @@
         <div class="stat-tile"><div class="num" id="stat-messages">–</div><div class="label">Neue Nachrichten</div></div>
       </div>
 
+      <h3 style="font-size:0.95rem;margin:1.5rem 0 0.75rem;">Verlauf (letzte 14 Tage)</h3>
+      <div id="visits-chart" class="chart-wrap"></div>
+
       <h3 style="font-size:0.95rem;margin:1.5rem 0 0.75rem;">Aufrufe pro Seite</h3>
       <div class="table-wrap">
         <table class="admin-table">
@@ -141,9 +146,64 @@
       </div>
       <div class="table-wrap">
         <table class="admin-table">
-          <thead><tr><th>Datum</th><th>Von</th><th>Nachricht</th><th>Status</th><th>Aktionen</th></tr></thead>
-          <tbody id="messages-table"><tr><td colspan="5" class="empty-note">Lade…</td></tr></tbody>
+          <thead><tr><th>Datum</th><th>Von</th><th>Nachricht</th><th>Notiz</th><th>Status</th><th>Aktionen</th></tr></thead>
+          <tbody id="messages-table"><tr><td colspan="6" class="empty-note">Lade…</td></tr></tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- Devlog -->
+    <div class="tab-panel" id="panel-devlog">
+      <div class="panel-head">
+        <h2>Devlog-Einträge</h2>
+        <button class="refresh-btn" id="devlog-refresh">Aktualisieren</button>
+      </div>
+
+      <div class="settings-card">
+        <h3 id="devlog-form-title">Neuer Eintrag</h3>
+        <input type="hidden" id="devlog-edit-id" value="" />
+        <div class="field">
+          <label for="devlog-title">Titel</label>
+          <input type="text" id="devlog-title" />
+        </div>
+        <div class="field">
+          <label for="devlog-content">Text</label>
+          <textarea id="devlog-content" style="min-height:140px;"></textarea>
+        </div>
+        <div class="toggle-row">
+          <label class="switch">
+            <input type="checkbox" id="devlog-published" />
+            <span class="slider"></span>
+          </label>
+          <span style="font-size:0.9rem;color:var(--text-dim);">Veröffentlicht (auf /devlog/ sichtbar)</span>
+        </div>
+        <div style="display:flex;gap:0.6rem;">
+          <button class="btn-small primary" id="devlog-save">Speichern</button>
+          <button class="btn-small" id="devlog-cancel-edit" hidden>Abbrechen</button>
+        </div>
+        <p class="form-success" id="devlog-form-msg"></p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Titel</th><th>Status</th><th>Datum</th><th>Aktionen</th></tr></thead>
+          <tbody id="devlog-table"><tr><td colspan="4" class="empty-note">Lade…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tools -->
+    <div class="tab-panel" id="panel-tools">
+      <div class="panel-head">
+        <h2>QR-Code-Generator</h2>
+      </div>
+      <div class="settings-card">
+        <div class="field">
+          <label for="qr-input">URL oder Text</label>
+          <input type="text" id="qr-input" value="https://niki4407.de" />
+        </div>
+        <button class="btn-small primary" id="qr-generate">QR-Code erzeugen</button>
+        <div id="qr-output" style="margin-top:1.25rem;background:#fff;padding:1rem;border-radius:8px;display:inline-block;"></div>
       </div>
     </div>
 
@@ -189,11 +249,35 @@
         <button class="btn-small primary" id="save-about-p1">Speichern</button>
         <p class="form-success" id="save-about-p1-msg"></p>
       </div>
+
+      <div class="settings-card">
+        <h3>Preview-Passwort (für unfertige Projektseiten)</h3>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:-0.5rem;">
+          Mit diesem Passwort lassen sich Entwurfsseiten sperren, die noch nicht öffentlich sein sollen
+          (Vorlage: <code>/preview-beispiel/</code>).
+        </p>
+        <div class="field">
+          <label for="preview-password">Neues Passwort setzen</label>
+          <input type="text" id="preview-password" autocomplete="off" />
+        </div>
+        <button class="btn-small primary" id="save-preview-password">Passwort setzen</button>
+        <p class="form-success" id="save-preview-password-msg"></p>
+      </div>
+
+      <div class="settings-card">
+        <h3>E-Mail-Benachrichtigung bei neuer Nachricht</h3>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:-0.5rem;">
+          Wird direkt in der Datenbank eingerichtet (kostenloser Resend-Account nötig) — Details stehen in
+          <code>supabase/migration_features.sql</code>. Sobald eingerichtet, bekommst du bei jeder neuen
+          Kontaktanfrage automatisch eine E-Mail.
+        </p>
+      </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-  <script src="assets/js/supabase-config.js?v=20260831a"></script>
-  <script src="assets/js/admin.js?v=20260831a"></script>
+  <script src="assets/js/vendor/supabase.js"></script>
+  <script src="assets/js/vendor/qrcode.js"></script>
+  <script src="assets/js/supabase-config.js?v=20260831b"></script>
+  <script src="assets/js/admin.js?v=20260831b"></script>
 </body>
 </html>

@@ -1,0 +1,20 @@
+/* Selbst gehostete Schriften (Space Grotesk, JetBrains Mono) — nur lateinisches
+   Subset (deckt Deutsch/Englisch inkl. ÄÖÜß ab). Kein externer Request mehr an
+   fonts.googleapis.com/fonts.gstatic.com — vermeidet die DSGVO-Problematik rund
+   um IP-Übertragung an Google beim dynamischen Laden von Google Fonts. */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("../fonts/jetbrainsmono-var.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("../fonts/spacegrotesk-var.woff2") format("woff2");
+}

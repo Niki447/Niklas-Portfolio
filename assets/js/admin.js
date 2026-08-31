@@ -169,6 +169,7 @@
     loadStats();
     loadMessages();
     loadSettings();
+    loadDevlog();
   }
 
   // ---------- Live-Besucher (Realtime Presence) ----------
@@ -244,9 +245,49 @@
 
         renderCountTable("pages-table", byPage, "Seite", "Aufrufe");
         renderCountTable("referrer-table", byRef, "Quelle", "Besuche");
+        renderVisitsChart(rows);
       });
   }
   document.getElementById("stats-refresh").addEventListener("click", loadStats);
+
+  function renderVisitsChart(rows) {
+    var days = 14;
+    var counts = [];
+    var now = new Date();
+    for (var i = days - 1; i >= 0; i--) {
+      var d = new Date(now);
+      d.setDate(d.getDate() - i);
+      counts.push({ key: d.toISOString().slice(0, 10), count: 0 });
+    }
+    var byKey = {};
+    counts.forEach(function (c) {
+      byKey[c.key] = c;
+    });
+    rows.forEach(function (r) {
+      var key = (r.created_at || "").slice(0, 10);
+      if (byKey[key]) byKey[key].count++;
+    });
+    var max = counts.reduce(function (m, c) {
+      return Math.max(m, c.count);
+    }, 1);
+
+    var wrap = document.getElementById("visits-chart");
+    wrap.innerHTML = "";
+    counts.forEach(function (c) {
+      var col = document.createElement("div");
+      col.className = "chart-bar-col";
+      var bar = document.createElement("div");
+      bar.className = "chart-bar";
+      bar.style.height = Math.max(2, Math.round((c.count / max) * 100)) + "%";
+      bar.title = c.key + ": " + c.count + " Aufrufe";
+      var label = document.createElement("span");
+      label.className = "chart-bar-label";
+      label.textContent = c.key.slice(5).replace("-", ".");
+      col.appendChild(bar);
+      col.appendChild(label);
+      wrap.appendChild(col);
+    });
+  }
 
   function renderCountTable(bodyId, obj, keyLabel, valLabel) {
     var tbody = document.getElementById(bodyId);
@@ -289,7 +330,7 @@
         }).length;
         tbody.innerHTML = "";
         if (!rows.length) {
-          tbody.innerHTML = '<tr><td colspan="5" class="empty-note">Noch keine Nachrichten.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-note">Noch keine Nachrichten.</td></tr>';
           return;
         }
         rows.forEach(function (m) {
@@ -302,13 +343,31 @@
             escapeHtml(m.name) +
             "<br><span style='color:var(--text-dim);font-size:0.78rem;'>" +
             escapeHtml(m.email) +
-            "</span></td><td style='max-width:320px;white-space:pre-wrap;'>" +
+            "</span></td><td style='max-width:280px;white-space:pre-wrap;'>" +
             escapeHtml(m.message) +
-            '</td><td><span class="pill status-' +
+            "</td><td></td>" +
+            '<td><span class="pill status-' +
             m.status +
             '">' +
             escapeHtml(m.status) +
             "</span></td><td></td>";
+
+          var notesTd = tr.children[3];
+          var notesWrap = document.createElement("div");
+          var notesArea = document.createElement("textarea");
+          notesArea.className = "notes-input";
+          notesArea.value = m.notes || "";
+          notesArea.placeholder = "z. B. schon geantwortet am…";
+          var notesSave = document.createElement("button");
+          notesSave.className = "btn-small";
+          notesSave.style.marginTop = "0.35rem";
+          notesSave.textContent = "Notiz speichern";
+          notesSave.addEventListener("click", function () {
+            sb.from("contact_messages").update({ notes: notesArea.value }).eq("id", m.id).then(function () {});
+          });
+          notesWrap.appendChild(notesArea);
+          notesWrap.appendChild(notesSave);
+          notesTd.appendChild(notesWrap);
 
           var actionsTd = tr.lastElementChild;
           var wrap = document.createElement("div");
@@ -411,6 +470,154 @@
         }
       });
   }
+
+  // ---------- Preview-Passwort ----------
+  document.getElementById("save-preview-password").addEventListener("click", function () {
+    var pw = document.getElementById("preview-password").value;
+    var msgEl = document.getElementById("save-preview-password-msg");
+    if (!pw || pw.length < 4) {
+      msgEl.textContent = "Bitte mindestens 4 Zeichen eingeben.";
+      return;
+    }
+    sb.rpc("set_preview_password", { new_password: pw }).then(function (res) {
+      msgEl.textContent = res.error ? "Fehler: " + res.error.message : "Passwort gesetzt ✓";
+      if (!res.error) document.getElementById("preview-password").value = "";
+      setTimeout(function () {
+        msgEl.textContent = "";
+      }, 3000);
+    });
+  });
+
+  // ---------- QR-Code-Generator ----------
+  document.getElementById("qr-generate").addEventListener("click", function () {
+    var text = document.getElementById("qr-input").value.trim();
+    var out = document.getElementById("qr-output");
+    out.innerHTML = "";
+    if (!text || typeof window.qrcode !== "function") return;
+    try {
+      var qr = window.qrcode(0, "M");
+      qr.addData(text);
+      qr.make();
+      out.innerHTML = qr.createSvgTag(6, 0);
+    } catch (e) {
+      out.textContent = "Konnte QR-Code nicht erzeugen (Text evtl. zu lang).";
+    }
+  });
+
+  // ---------- Devlog ----------
+  function slugify(title) {
+    return title
+      .toLowerCase()
+      .replace(/[äöüß]/g, function (c) {
+        return { ä: "ae", ö: "oe", ü: "ue", ß: "ss" }[c];
+      })
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
+      .slice(0, 80);
+  }
+
+  document.getElementById("devlog-save").addEventListener("click", function () {
+    var id = document.getElementById("devlog-edit-id").value;
+    var title = document.getElementById("devlog-title").value.trim();
+    var content = document.getElementById("devlog-content").value.trim();
+    var published = document.getElementById("devlog-published").checked;
+    var msgEl = document.getElementById("devlog-form-msg");
+    if (!title || !content) {
+      msgEl.textContent = "Titel und Text sind Pflicht.";
+      return;
+    }
+
+    var payload = { title: title, content: content, published: published };
+    var query;
+    if (id) {
+      query = sb.from("posts").update(payload).eq("id", id);
+    } else {
+      payload.slug = slugify(title) + "-" + Date.now().toString(36);
+      query = sb.from("posts").insert(payload);
+    }
+
+    query.then(function (res) {
+      if (res.error) {
+        msgEl.textContent = "Fehler: " + res.error.message;
+        return;
+      }
+      msgEl.textContent = "Gespeichert ✓";
+      resetDevlogForm();
+      loadDevlog();
+      setTimeout(function () {
+        msgEl.textContent = "";
+      }, 2500);
+    });
+  });
+
+  document.getElementById("devlog-cancel-edit").addEventListener("click", resetDevlogForm);
+
+  function resetDevlogForm() {
+    document.getElementById("devlog-edit-id").value = "";
+    document.getElementById("devlog-title").value = "";
+    document.getElementById("devlog-content").value = "";
+    document.getElementById("devlog-published").checked = false;
+    document.getElementById("devlog-form-title").textContent = "Neuer Eintrag";
+    document.getElementById("devlog-cancel-edit").hidden = true;
+  }
+
+  function loadDevlog() {
+    sb.from("posts")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .then(function (res) {
+        var tbody = document.getElementById("devlog-table");
+        var rows = res.data || [];
+        tbody.innerHTML = "";
+        if (!rows.length) {
+          tbody.innerHTML = '<tr><td colspan="4" class="empty-note">Noch keine Einträge.</td></tr>';
+          return;
+        }
+        rows.forEach(function (p) {
+          var tr = document.createElement("tr");
+          var date = new Date(p.created_at).toLocaleDateString("de-DE");
+          tr.innerHTML =
+            "<td>" +
+            escapeHtml(p.title) +
+            '</td><td><span class="pill' +
+            (p.published ? " status-new" : "") +
+            '">' +
+            (p.published ? "veröffentlicht" : "Entwurf") +
+            "</span></td><td>" +
+            date +
+            "</td><td></td>";
+          var actionsTd = tr.lastElementChild;
+          var wrap = document.createElement("div");
+          wrap.className = "msg-actions";
+
+          var editBtn = document.createElement("button");
+          editBtn.textContent = "Bearbeiten";
+          editBtn.addEventListener("click", function () {
+            document.getElementById("devlog-edit-id").value = p.id;
+            document.getElementById("devlog-title").value = p.title;
+            document.getElementById("devlog-content").value = p.content;
+            document.getElementById("devlog-published").checked = p.published;
+            document.getElementById("devlog-form-title").textContent = "Eintrag bearbeiten";
+            document.getElementById("devlog-cancel-edit").hidden = false;
+            document.getElementById("panel-devlog").scrollIntoView({ behavior: "smooth" });
+          });
+          wrap.appendChild(editBtn);
+
+          var delBtn = document.createElement("button");
+          delBtn.className = "danger";
+          delBtn.textContent = "Löschen";
+          delBtn.addEventListener("click", function () {
+            if (!confirm("Diesen Devlog-Eintrag wirklich löschen?")) return;
+            sb.from("posts").delete().eq("id", p.id).then(loadDevlog);
+          });
+          wrap.appendChild(delBtn);
+
+          actionsTd.appendChild(wrap);
+          tbody.appendChild(tr);
+        });
+      });
+  }
+  document.getElementById("devlog-refresh").addEventListener("click", loadDevlog);
 
   function escapeHtml(str) {
     var div = document.createElement("div");

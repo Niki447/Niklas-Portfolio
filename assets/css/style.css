@@ -577,6 +577,25 @@ form.contact-form .form-note {
   font-size: 0.78rem;
 }
 
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.consent-row input {
+  margin-top: 0.25rem;
+  width: auto;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.consent-row a {
+  color: var(--accent);
+}
+
 /* Footer */
 footer.site-footer {
   border-top: 1px solid var(--border);
@@ -602,6 +621,40 @@ footer.site-footer {
 
 .footer-links a:hover {
   color: var(--accent);
+}
+
+/* Devlog */
+.devlog-list {
+  max-width: 720px;
+  display: grid;
+  gap: 2rem;
+}
+
+.devlog-entry {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2rem;
+}
+
+.devlog-entry:last-child {
+  border-bottom: none;
+}
+
+.devlog-date {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 0.8rem;
+  margin: 0 0 0.4rem;
+}
+
+.devlog-entry h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.3rem;
+}
+
+.devlog-body {
+  color: var(--text-dim);
+  white-space: pre-wrap;
+  margin: 0;
 }
 
 /* Page hero (subpages) */

@@ -1,0 +1,47 @@
+/* Impressum / Datenschutz — schlichte Lesetypografie auf Basis der Design-Tokens */
+
+.legal-content {
+  max-width: 760px;
+}
+
+.legal-content h2 {
+  font-size: 1.15rem;
+  margin: 2.25rem 0 0.75rem;
+}
+
+.legal-content h2:first-of-type {
+  margin-top: 0.5rem;
+}
+
+.legal-content p {
+  color: var(--text-dim);
+  line-height: 1.75;
+}
+
+.legal-content a {
+  color: var(--accent);
+}
+
+.legal-content code {
+  font-family: var(--font-mono);
+  background: var(--card);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.legal-list {
+  color: var(--text-dim);
+  line-height: 1.9;
+  padding-left: 1.2rem;
+}
+
+.legal-content .callout {
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  background: rgba(34, 211, 238, 0.06);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.35rem;
+  margin: 0 0 2rem;
+  font-size: 0.92rem;
+  color: var(--text);
+}

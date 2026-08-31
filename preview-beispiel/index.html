@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Vorschau — Niklas</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://elwqgmazudvsgsvgpzxz.supabase.co wss://elwqgmazudvsgsvgpzxz.supabase.co; base-uri 'self'; object-src 'none'" />
+  <link rel="stylesheet" href="../assets/css/fonts.css?v=20260831b" />
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260831b" />
+  <link rel="stylesheet" href="../assets/css/admin.css?v=20260831b" />
+</head>
+<body class="admin-body">
+
+  <!-- Sperr-Overlay: wird eingeblendet, solange kein gültiges Passwort eingegeben wurde -->
+  <div class="login-wrap" id="preview-gate-overlay">
+    <div class="login-card">
+      <h1>Vorschau — geschützt</h1>
+      <p class="sub">Diese Seite ist noch nicht öffentlich. Bitte Passwort eingeben.</p>
+      <form id="preview-gate-form">
+        <div class="field">
+          <label for="preview-gate-input">Passwort</label>
+          <input type="password" id="preview-gate-input" required />
+        </div>
+        <button type="submit" class="btn-small primary" style="width:100%;padding:0.75rem;">Ansehen</button>
+        <p class="form-error" id="preview-gate-error"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Eigentlicher Seiteninhalt: hier den Entwurf reinbauen, bleibt bis zur Freigabe versteckt -->
+  <div id="preview-content" hidden>
+    <header class="site-header">
+      <div class="nav-inner">
+        <a class="brand" href="../index.html">niki4407<span class="blink">_</span></a>
+      </div>
+    </header>
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <p class="kicker">Vorschau</p>
+          <h1>Beispiel-Vorschauseite</h1>
+          <p>
+            Das ist eine Vorlage. Kopier diesen Ordner, füll den Bereich unten mit dem echten
+            Entwurfsinhalt und verlinke den neuen Ordner-Namen niemandem, außer den Leuten, die die
+            Vorschau sehen sollen. Das Passwort setzt du im Admin-Dashboard unter „Einstellungen".
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/js/vendor/supabase.js"></script>
+  <script src="../assets/js/supabase-config.js?v=20260831b"></script>
+  <script src="../assets/js/preview-gate.js?v=20260831b"></script>
+</body>
+</html>

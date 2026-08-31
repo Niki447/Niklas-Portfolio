@@ -20,9 +20,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png" />
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://elwqgmazudvsgsvgpzxz.supabase.co wss://elwqgmazudvsgsvgpzxz.supabase.co; base-uri 'self'; object-src 'none'" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260831a" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://elwqgmazudvsgsvgpzxz.supabase.co wss://elwqgmazudvsgsvgpzxz.supabase.co; base-uri 'self'; object-src 'none'" />
+  <link rel="stylesheet" href="../assets/css/fonts.css?v=20260831b" />
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260831b" />
 </head>
 <body>
 
@@ -39,6 +39,7 @@
           <li><a href="index.html" aria-current="page">Freelance</a></li>
           <li><a href="../fivem/index.html">FiveM</a></li>
           <li><a href="../discord/index.html">Discord</a></li>
+          <li><a href="../devlog/index.html">Devlog</a></li>
           <li><a href="../index.html#kontakt" class="nav-cta">Kontakt</a></li>
         </ul>
       </nav>
@@ -81,6 +82,11 @@
           </div>
 
         </div>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:1.5rem;" data-reveal>
+          Bei Chatbots und KI-Agenten baue ich die nach dem EU AI Act (Art. 50) vorgeschriebene
+          Kennzeichnung serienmäßig ein, sodass für Endnutzer klar erkennbar ist, dass sie mit einem
+          KI-System interagieren.
+        </p>
       </div>
     </section>
 
@@ -120,13 +126,15 @@
         <a href="mailto:niklas.scheiper@outlook.de">Mail</a>
         <a href="https://github.com/Niki447" target="_blank" rel="noopener">GitHub</a>
         <span>Discord: Niki.dev</span>
+        <a href="../impressum/index.html">Impressum</a>
+        <a href="../datenschutz/index.html">Datenschutz</a>
       </div>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-  <script src="../assets/js/supabase-config.js?v=20260831a"></script>
-  <script src="../assets/js/cloud.js?v=20260831a"></script>
-  <script src="../assets/js/site.js?v=20260831a"></script>
+  <script src="../assets/js/vendor/supabase.js"></script>
+  <script src="../assets/js/supabase-config.js?v=20260831b"></script>
+  <script src="../assets/js/cloud.js?v=20260831b"></script>
+  <script src="../assets/js/site.js?v=20260831b"></script>
 </body>
 </html>
