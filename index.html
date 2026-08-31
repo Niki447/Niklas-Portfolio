@@ -6,7 +6,7 @@
   <title>Niklas — Portfolio</title>
   <meta name="description" content="Portfolio von Niklas: Jarvis (KI-Assistent), Freelance-Arbeiten, FiveM-Modding und Discord-Bots." />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260829g" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260831a" />
 </head>
 <body>
 
@@ -37,9 +37,9 @@
         <p class="hero-typed">
           <span class="typed-cursor" data-typed='["Web Developer","FiveM Scripter","Discord Bot Builder","Freelancer"]'></span><span class="typed-caret">|</span>
         </p>
-        <!-- TODO: kurzer, prägnanter Claim ersetzen sobald der Text da ist -->
-        <p class="lead">
-          [Platzhalter] Ich baue Webseiten, Bots, KI-Lösungen und FiveM-Projekte.
+        <span class="availability-badge" data-availability-badge hidden></span>
+        <p class="lead" data-cms="hero_lead">
+          Ich baue Webseiten, Bots, KI-Lösungen und FiveM-Projekte.
           Hier findest du meine Projekte, meine Freelance-Angebote und wie du mich erreichst.
         </p>
         <div class="btn-row">
@@ -78,7 +78,7 @@
           <p class="kicker">Über mich</p>
           <h2>Wer steckt dahinter?</h2>
         </div>
-        <p style="color:var(--text-dim);max-width:700px;" data-reveal>
+        <p style="color:var(--text-dim);max-width:700px;" data-reveal data-cms="about_p1">
           Ich bin Niklas und programmiere, seit ich 12 bin — aus einem Hobby ist mittlerweile
           mein Weg in die Anwendungsentwicklung geworden. Aktuell bin ich auf der Suche nach
           dem Einstieg (Ausbildung oder Job) im Bereich Anwendungsentwicklung und KI —
@@ -179,6 +179,9 @@
     </div>
   </footer>
 
-  <script src="assets/js/site.js?v=20260829g"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="assets/js/supabase-config.js?v=20260831a"></script>
+  <script src="assets/js/cloud.js?v=20260831a"></script>
+  <script src="assets/js/site.js?v=20260831a"></script>
 </body>
 </html>
